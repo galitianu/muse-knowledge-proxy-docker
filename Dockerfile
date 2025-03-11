@@ -14,17 +14,18 @@ COPY license.lic $LICENSE_FILE
 
 # Create a silent install options file using environment variables
 RUN echo "\
--W serialNumberPanel.serialPropertiesPath=${LICENSE_FILE} \n\
--W licenseELS.selection=1 \n\
--P installLocation=${INSTALL_DIR} \n\
--W setupTypes.selectedSetupTypeId=typical \n\
--W ProxyhostsEditorAdministrator.proxyPort=${PROXY_PORT} \n\
--W ProxyhostsEditorAdministrator.SSLProxyPort=${SSL_PROXY_PORT} \n\
--W ProxyAdministratorPanel.password=${ADMIN_PASSWORD} \n\
--W ProxyMKPFUPPanel.password=${ADMIN_PASSWORD} \n\
--W ProxyMuseProxyFoundationUPPanel.password=${ADMIN_PASSWORD} \n\
--W ProxyAnonymousUPPanel.password=${ADMIN_PASSWORD} \n\
--W installServicesPanel.proxyServiceDefaultStatus=0 \n" > /tmp/muse-options.txt
+    -W serialNumberPanel.serialPropertiesPath=${LICENSE_FILE} \n\
+    -W licenseELS.selection=1 \n\
+    -P installLocation=${INSTALL_DIR} \n\
+    -W setupTypes.selectedSetupTypeId=typical \n\
+    -W ProxyhostsEditorAdministrator.proxyPort=${PROXY_PORT} \n\
+    -W ProxyhostsEditorAdministrator.SSLProxyPort=${SSL_PROXY_PORT} \n\
+    -W ProxyhostsEditorAdministrator.IPEntry=127.*.*.* \n\
+    -W ProxyAdministratorPanel.password=${ADMIN_PASSWORD} \n\
+    -W ProxyMKPFUPPanel.password=${ADMIN_PASSWORD} \n\
+    -W ProxyMuseProxyFoundationUPPanel.password=${ADMIN_PASSWORD} \n\
+    -W ProxyAnonymousUPPanel.password=${ADMIN_PASSWORD} \n\
+    -W installServicesPanel.proxyServiceDefaultStatus=1 \n" > /tmp/muse-options.txt
 
 # Install Muse Proxy in silent mode
 RUN java -jar /tmp/muse-proxy-setup.jar -options /tmp/muse-options.txt -silent
